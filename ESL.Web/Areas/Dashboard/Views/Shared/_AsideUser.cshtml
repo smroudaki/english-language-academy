@@ -1,0 +1,152 @@
+﻿
+<ul class="navbar nav aside-panel">
+
+    <li>
+        <img src="~/Content/Images/abstract-user-flat-3.png" alt="Logo" class="img-responsive img-rounded img-logo" style="height:200px;">
+        <a href="@Url.Action("Index", "Dashboard" , new { area = "Dashboard" })">
+            <i class="glyphicon glyphicon-dashboard  "></i>
+            داشبورد
+        </a>
+    </li>
+
+    <li>
+        <a href="@Url.Action("Index", "Purchase", new { area = "Dashboard" })">
+            <i class="glyphicon glyphicon-book"></i>
+            خرید
+        </a>
+    </li>
+
+    <li data-toggle="collapse" data-target="#sub-menu-message">
+
+        <a href="#">
+            <i class="glyphicon glyphicon-book"></i>
+            پیام ها
+            <i class="glyphicon glyphicon-chevron-right pull-right"></i>
+        </a>
+
+        <ul class="collapse nav aside-sub-panel" id="sub-menu-message">
+
+            <li>
+                <a href="@Url.Action("Index", "Dashboard")">
+                    <i class="glyphicon glyphicon-book"></i>
+                    ارسال پیام
+                </a>
+            </li>
+
+            <li>
+                <a href="@Url.Action("Index", "Dashboard")">
+                    <i class="glyphicon glyphicon-book"></i>
+                    لیست پیام های دریافتی
+                </a>
+            </li>
+
+            <li>
+                <a href="@Url.Action("Index", "Dashboard")">
+                    <i class="glyphicon glyphicon-book"></i>
+                    لیست پیام های ارسالی
+                </a>
+            </li>
+
+        </ul>
+
+    </li>
+
+    <li data-toggle="collapse" data-target="#sub-menu-pay">
+
+        <a href="javascript:void(0)">
+            <i class="glyphicon glyphicon-book"></i>
+            کیف پول
+            <i class="glyphicon glyphicon-chevron-right pull-right"></i>
+        </a>
+
+        <ul class="collapse nav aside-sub-panel" id="sub-menu-pay">
+
+            <li>
+                <a href="@Url.Action("ChargeWallet", "Payment")">
+                    <i class="glyphicon glyphicon-book"></i>
+                    شارژ
+                </a>
+            </li>
+
+            <li>
+                <a href="@Url.Action("List", "Payment")">
+                    <i class="glyphicon glyphicon-book"></i>
+                    تراکنش ها
+                </a>
+            </li>
+
+            <li>
+                <a href="@Url.Action("ConfirmedList", "Payment")">
+                    <i class="glyphicon glyphicon-book"></i>
+                    تراکنش های تایید شده
+                </a>
+            </li>
+
+            <li>
+                <a href="@Url.Action("WaitForAcceptanceList", "Payment")">
+                    <i class="glyphicon glyphicon-book"></i>
+                    تراکنش های تایید نشده
+                </a>
+            </li>
+
+            <li>
+                <a href="@Url.Action("SuspendedList", "Payment")">
+                    <i class="glyphicon glyphicon-book"></i>
+                    تراکنش های معلق
+                </a>
+            </li>
+
+            <li>
+                <a href="@Url.Action("RejectedList", "Payment")">
+                    <i class="glyphicon glyphicon-book"></i>
+                    تراکنش های رد شده
+                </a>
+            </li>
+
+        </ul>
+
+    </li>
+
+    <li data-toggle="collapse" data-target="#sub-menu-exam">
+
+        <a href="javascript:void(0)">
+            <i class="glyphicon glyphicon-book"></i>
+            آزمون ها
+            <i class="glyphicon glyphicon-chevron-right pull-right"></i>
+        </a>
+
+        <ul class="collapse nav aside-sub-panel" id="sub-menu-exam">
+
+            <li>
+                <a href="@Url.Action("List", "ExamRemotely")">
+                    <i class="glyphicon glyphicon-book"></i>
+                    آزمون های غیر حضوری
+                </a>
+            </li>
+
+            <li>
+                <a href="@Url.Action("List", "ExamInPerson")">
+                    <i class="glyphicon glyphicon-book"></i>
+                    آزمون های حضوری
+                </a>
+            </li>
+
+        </ul>
+
+    </li>
+
+    <li>
+        <a href="@Url.Action("List", "Class", new { area = "Dashboard" })">
+            <i class="glyphicon glyphicon-book"></i>
+            کلاس ها
+        </a>
+    </li>
+
+    <li>
+        <a href="@Url.Action("List", "Workshop", new { area = "Dashboard" })">
+            <i class="glyphicon glyphicon-book"></i>
+            کارگاه ها
+        </a>
+    </li>
+
+</ul>

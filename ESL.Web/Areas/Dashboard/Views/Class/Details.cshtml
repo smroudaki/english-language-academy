@@ -1,0 +1,129 @@
+﻿@model IEnumerable<ESL.Web.Areas.Dashboard.Models.ViewModels.Model_UserClassPlan>
+@using ESL.Common.Plugins
+
+@{
+    ViewBag.Title = "لیست افراد شرکت کننده در کلاس";
+    Layout = "~/Areas/Dashboard/Views/Shared/_Master.cshtml";
+}
+
+<div class="panel panel-body panel-default navigation">
+
+    <div class="pull-left" style="margin-left: 10px;">
+        <a href="@Url.Action("Index", "Class")" data-toggle="tooltip" data-placement="auto" title="برگشت به صفحه قبل">
+            <i class="glyphicon glyphicon-arrow-left navigation-btn-icon"></i>
+        </a>
+    </div>
+
+    <div class="pull-left" style="margin-left: 10px;">
+        <h4 class="navigation-title"><b>@ViewBag.Title</b></h4>
+    </div>
+
+    <div class="pull-right">
+        <a href="javascript:void(0)" onclick="Create(@ViewBag.ClassID)" data-toggle="tooltip" data-placement="auto" title="ثبت نام">
+            <i class="glyphicon glyphicon-plus navigation-btn-icon"></i>
+        </a>
+    </div>
+
+</div>
+
+<div class="panel panel-default">
+    <div class="panel-body table-body" style="overflow-x:auto;">
+        <table id="DateTable" class="table table-bordered table-striped table-secondary" style="width:100%;">
+
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">@Html.DisplayNameFor(model => model.User)</th>
+                    <th scope="col">@Html.DisplayNameFor(model => model.CreationDate)</th>
+                    <th scope="col">@Html.DisplayNameFor(model => model.PresenceSessions)</th>
+                    <th scope="col">@Html.DisplayNameFor(model => model.Activeness)</th>
+                    <th scope="col">کنترل</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                @{
+                    int x = 0;
+                }
+
+                @foreach (var item in Model)
+                {
+                    x++;
+
+                    <tr>
+                        <td scope="row">@x</td>
+                        <td scope="row">
+                            <span>@Html.DisplayFor(modelItem => item.User)</span>
+                        </td>
+                        <td scope="row">
+                            <span>@PersianDateExtensionMethods.ToPeString(item.CreationDate, "yyyy/MM/dd HH:mm")</span>
+                        </td>
+                        <td scope="row">
+                            <span>@Html.DisplayFor(modelItem => item.PresenceSessions)</span>
+                        </td>
+                        <td scope="row">
+                            <span>@( item.Activeness ? "تایید شده" : "تایید نشده" )</span>
+                        </td>
+                        <td scope="row">
+                            @if (item.Activeness)
+                            {
+                                <a class="control btn btn-danger btn-sm glyphicon glyphicon-user" data-toggle="tooltip" data-placement="auto" title="لغو ثبت نام" href="javascript:void(0)" onclick="UnRegister(@item.ID)"></a>
+                            }
+                            else
+                            {
+                                <a class="control btn btn-success btn-sm glyphicon glyphicon-user" data-toggle="tooltip" data-placement="auto" title="ثبت نام" href="javascript:void(0)" onclick="Register(@item.ID)"></a>
+                            }
+                        </td>
+                    </tr>
+                }
+
+            </tbody>
+
+        </table>
+    </div>
+</div>
+
+@Html.Partial("_Modal")
+
+@section Scripts {
+    <script>
+
+        function Create(id) {
+            $.ajax({
+                url: "/Dashboard/UserClass/Create/" + id,
+                type: "Get",
+                data: {}
+            }).done(function (result) {
+                $('#myModal').modal('show');
+                $('#myModalLabel').html('ثبت نام');
+                $('#myModalBody').html(result);
+            });
+        }
+
+        function UnRegister(id) {
+            $.ajax({
+                url: "/Dashboard/UserClass/UnRegister/" + id,
+                type: "Get",
+                data: {}
+            }).done(function (result) {
+                $('#myModal').modal('show');
+                $('#myModalLabel').html('لغو ثبت نام');
+                $('#myModalBody').html(result);
+            });
+        }
+
+        function Register(id) {
+            $.ajax({
+                url: "/Dashboard/UserClass/Register/" + id,
+                type: "Get",
+                data: {}
+            }).done(function (result) {
+                $('#myModal').modal('show');
+                $('#myModalLabel').html('ثبت نام');
+                $('#myModalBody').html(result);
+            });
+        }
+
+    </script>
+}

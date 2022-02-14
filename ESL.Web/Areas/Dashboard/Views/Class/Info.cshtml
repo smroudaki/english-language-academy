@@ -1,0 +1,62 @@
+﻿@model IEnumerable<ESL.Web.Areas.Dashboard.Models.ViewModels.Model_UserClassPlanPresence>
+@using ESL.Common.Plugins
+
+@{
+    ViewBag.Title = "لیست حضور";
+    Layout = "~/Areas/Dashboard/Views/Shared/_Master.cshtml";
+}
+
+<div class="panel panel-body panel-default navigation">
+    <div class="pull-left">
+        <h4 class="navigation-title"><b>@ViewBag.Title</b></h4>
+    </div>
+</div>
+
+<div class="panel panel-default">
+    <div class="panel-body table-body" style="overflow-x:auto;">
+        <table id="DateTable" class="table table-bordered table-striped table-secondary" style="width:100%;">
+
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">@Html.DisplayNameFor(model => model.Cost)</th>
+                    <th scope="col">@Html.DisplayNameFor(model => model.Discount)</th>
+                    <th scope="col">@Html.DisplayNameFor(model => model.Presence)</th>
+                    <th scope="col">@Html.DisplayNameFor(model => model.Date)</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                @{
+                    int x = 0;
+                }
+
+                @foreach (var item in Model)
+                {
+                    x++;
+
+                    <tr>
+                        <td scope="row">@x</td>
+                        <td scope="row">
+                            <span>@Html.DisplayFor(modelItem => item.Cost)</span>
+                        </td>
+                        <td scope="row">
+                            <span>@Html.DisplayFor(modelItem => item.Discount)</span>
+                        </td>
+                        <td scope="row">
+                            <span>@( item.Presence ? "حاضر" : "غایب" )</span>
+                        </td>
+                        <td scope="row">
+                            <span>@PersianDateExtensionMethods.ToPeString(item.Date, "yyyy/MM/dd HH:mm")</span>
+                        </td>
+                    </tr>
+                }
+
+            </tbody>
+
+        </table>
+    </div>
+</div>
+
+@Html.Partial("_Modal")

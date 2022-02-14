@@ -1,0 +1,151 @@
+﻿@model IEnumerable<ESL.Web.Areas.Dashboard.Models.ViewModels.Model_ExamsInPersonPlan>
+@using ESL.Common.Plugins
+
+@{
+    ViewBag.Title = "لیست آزمون های حضوری";
+    Layout = "~/Areas/Dashboard/Views/Shared/_Master.cshtml";
+}
+
+<div class="panel panel-body panel-default navigation">
+
+    <div class="pull-left">
+        <h4 class="navigation-title"><b>@ViewBag.Title</b></h4>
+    </div>
+
+    <div class="pull-right">
+        <a href="@Url.Action("Create", "ExamInPerson", new { @area = "Dashboard" })" data-toggle="tooltip" data-placement="auto" title="افزودن آزمون">
+            <i class="glyphicon glyphicon-plus navigation-btn-icon"></i>
+        </a>
+    </div>
+
+</div>
+
+<div class="panel panel-default">
+    <div class="panel-body table-body" style="overflow-x:auto;">
+        <table id="DateTable" class="table table-bordered table-striped table-secondary" style="width:100%;">
+
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">@Html.DisplayNameFor(model => model.Exam)</th>
+                    <th scope="col">@Html.DisplayNameFor(model => model.SubExam)</th>
+                    <th scope="col">@Html.DisplayNameFor(model => model.Description)</th>
+                    <th scope="col">@Html.DisplayNameFor(model => model.Cost)</th>
+                    <th scope="col">@Html.DisplayNameFor(model => model.Location)</th>
+                    <th scope="col">@Html.DisplayNameFor(model => model.Capacity)</th>
+                    <th scope="col">@Html.DisplayNameFor(model => model.TotalMark)</th>
+                    <th scope="col">@Html.DisplayNameFor(model => model.PassMark)</th>
+                    <th scope="col">@Html.DisplayNameFor(model => model.Date)</th>
+                    <th scope="col">@Html.DisplayNameFor(model => model.CreationDate)</th>
+                    <th scope="col">@Html.DisplayNameFor(model => model.ModifiedDate)</th>
+                    <th scope="col">@Html.DisplayNameFor(model => model.Activeness)</th>
+                    <th scope="col" data-orderable="false">کنترل</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                @{
+                    int x = 0;
+                }
+
+                @foreach (var item in Model)
+                {
+                    x++;
+
+                    <tr>
+                        <td scope="row">@x</td>
+                        <td scope="row">
+                            <span>@Html.DisplayFor(modelItem => item.Exam)</span>
+                        </td>
+                        <td scope="row">
+                            <span>@(item.SubExam == null ? "ثبت نشده" : item.SubExam)</span>
+                        </td>
+                        <td scope="row">
+                            <span>@(item.Description == null ? "ثبت نشده" : item.Description)</span>
+                        </td>
+                        <td scope="row">
+                            <span>@Html.DisplayFor(modelItem => item.Cost)</span>
+                        </td>
+                        <td scope="row">
+                            <span>@Html.DisplayFor(modelItem => item.Location)</span>
+                        </td>
+                        <td scope="row">
+                            <span>@Html.DisplayFor(modelItem => item.Capacity)</span>
+                        </td>
+                        <td scope="row">
+                            <span>@Html.DisplayFor(modelItem => item.TotalMark)</span>
+                        </td>
+                        <td scope="row">
+                            <span>@Html.DisplayFor(modelItem => item.PassMark)</span>
+                        </td>
+                        <td scope="row">
+                            <span>@PersianDateExtensionMethods.ToPeString(item.Date, "yyyy/MM/dd HH:mm")</span>
+                        </td>
+                        <td scope="row">
+                            <span>@PersianDateExtensionMethods.ToPeString(item.CreationDate, "yyyy/MM/dd HH:mm")</span>
+                        </td>
+                        <td scope="row">
+                            <span>@PersianDateExtensionMethods.ToPeString(item.ModifiedDate, "yyyy/MM/dd HH:mm")</span>
+                        </td>
+                        <td scope="row">
+                            <span>@(item.Activeness ? "فعال" : "غیر فعال")</span>
+                        </td>
+                        <td scope="row">
+                            <a class="control btn btn-primary btn-sm glyphicon glyphicon-ok" data-toggle="tooltip" data-placement="auto" title="تغییر وضعیت نمایش" href="javascript:void(0)" onclick="SetActiveness(@item.ID)"></a>
+                            <a class="control btn btn-info btn-sm glyphicon glyphicon-list" data-toggle="tooltip" data-placement="auto" title="افراد شرکت کننده در آزمون" href="@Url.Action("Details", "ExamInPerson", new { area = "Dashboard", id = item.ID })"></a>
+                            <a class="control btn btn-warning btn-sm glyphicon glyphicon-pencil" data-toggle="tooltip" data-placement="auto" title="ویرایش" href="@Url.Action("Edit", "ExamInPerson", new { area = "Dashboard", id = item.ID })"></a>
+                            <a class="control btn btn-danger btn-sm glyphicon glyphicon-trash" data-toggle="tooltip" data-placement="auto" title="حذف" href="javascript:void(0)" onclick="Delete(@item.ID)"></a>
+                        </td>
+                    </tr>
+                }
+
+            </tbody>
+
+        </table>
+    </div>
+</div>
+
+@Html.Partial("_Modal")
+
+@section Modal {
+    <script>
+
+        function Delete(id) {
+            $.ajax({
+                url: "/Dashboard/ExamInPerson/Delete/" + id,
+                type: "Get",
+                data: {}
+            }).done(function (result) {
+                $('#myModal').modal('show');
+                $('#myModalLabel').html('حدف آزمون');
+                $('#myModalBody').html(result);
+            });
+        }
+
+        function Create() {
+            $.ajax({
+                url: "/Dashboard/ExamInPerson/Create",
+                type: "Get",
+                data: {}
+            }).done(function (result) {
+                $('#myModal').modal('show');
+                $('#myModalLabel').html('افزودن آزمون');
+                $('#myModalBody').html(result);
+            });
+        }
+
+        function SetActiveness(id) {
+            $.ajax({
+                url: "/Dashboard/ExamInPerson/SetActiveness/" + id,
+                type: "Get",
+                data: {}
+            }).done(function (result) {
+                $('#myModal').modal('show');
+                $('#myModalLabel').html('تغییر وضعیت نمایش');
+                $('#myModalBody').html(result);
+            });
+        }
+
+    </script>
+}

@@ -1,0 +1,172 @@
+﻿@model ESL.Web.Areas.Dashboard.Models.ViewModels.Model_ClassPlanCreate
+@using ESL.Services.BaseRepository
+
+@{
+    ViewBag.Title = "افزودن کلاس";
+    Layout = "~/Areas/Dashboard/Views/Shared/_Master.cshtml";
+}
+
+@section Styles {
+    <link href="~/Content/Plugins/jQuery.MdBootstrapPersianDateTimePicker/jquery.Bootstrap-PersianDateTimePicker.css" rel="stylesheet" />
+}
+
+<div class="panel panel-body panel-default navigation">
+
+    <div class="pull-left" style="margin-left: 10px;">
+        <a href="@Url.Action("Index", "Class")" data-toggle="tooltip" data-placement="auto" title="برگشت به صفحه قبل">
+            <i class="glyphicon glyphicon-arrow-left navigation-btn-icon"></i>
+        </a>
+    </div>
+
+    <div class="pull-left" style="margin-left: 10px;">
+        <h4 class="navigation-title"><b>@ViewBag.Title</b></h4>
+    </div>
+
+</div>
+
+<div class="panel panel-default">
+    <div class="panel-body">
+
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="modal-main">
+                <div class="row" style="margin: 0 -30px;">
+
+                    <div class="col-md-6">
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Class, htmlAttributes: new { @class = "control-label" })
+                            @Html.DropDownListFor(model => model.Class, Rep_Class.Get_AllClasses(), new { @class = "form-control Select2_Normal" })
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Type, htmlAttributes: new { @class = "control-label" })
+                            @Html.DropDownListFor(model => model.Type, Rep_CodeGroup.Get_AllCodesWithGroupGUID(CodeGroup.ClassType), new { @class = "form-control Select2_Normal" })
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label" })
+
+                            <div class="input-group">
+                                <span class=" input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
+                                @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+                            </div>
+
+                            @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.CostPerSession, htmlAttributes: new { @class = "control-label" })
+
+                            <div class="input-group">
+                                <span class=" input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
+                                @Html.EditorFor(model => model.CostPerSession, new { htmlAttributes = new { @class = "form-control" } })
+                            </div>
+
+                            @Html.ValidationMessageFor(model => model.CostPerSession, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Time, htmlAttributes: new { @class = "control-label" })
+
+                            <div class="input-group">
+                                <span class=" input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
+                                @Html.EditorFor(model => model.Time, new { htmlAttributes = new { @class = "form-control" } })
+                            </div>
+
+                            @Html.ValidationMessageFor(model => model.Time, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.SessionsLength, htmlAttributes: new { @class = "control-label" })
+
+                            <div class="input-group">
+                                <span class=" input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
+                                @Html.EditorFor(model => model.SessionsLength, new { htmlAttributes = new { @class = "form-control" } })
+                            </div>
+
+                            @Html.ValidationMessageFor(model => model.SessionsLength, "", new { @class = "text-danger" })
+                        </div>
+
+                    </div>
+
+                    <div class="col-md-6">
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.StartDate, htmlAttributes: new { @class = "control-label" })
+                            <div id="Date" data-englishnumber="true" data-mddatetimepicker="true" data-inline="true" data-isgregorian="false" data-targetselector="#fromDate" data-enabletimepicker="true" style="border: solid 1px #ccc; background: #222d32; color: #ccc;"></div>
+                            <input type="hidden" name="StartDate" class="form-control" id="fromDate" placeholder="تاریخ" readonly />
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Location, htmlAttributes: new { @class = "control-label" })
+
+                            <div class="input-group">
+                                <span class=" input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
+                                @Html.EditorFor(model => model.Location, new { htmlAttributes = new { @class = "form-control" } })
+                            </div>
+
+                            @Html.ValidationMessageFor(model => model.Location, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Capacity, htmlAttributes: new { @class = "control-label" })
+
+                            <div class="input-group">
+                                <span class=" input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
+                                @Html.EditorFor(model => model.Capacity, new { htmlAttributes = new { @class = "form-control" } })
+                            </div>
+
+                            @Html.ValidationMessageFor(model => model.Capacity, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div class="form-group material-switch-body">
+                            <label class="pull-left">وضعیت نمایش</label>
+                            <div class="material-switch pull-right">
+                                @Html.CheckBoxFor(model => model.Activeness, htmlAttributes: new { @class = "" })
+                                @Html.LabelFor(model => model.Activeness, htmlAttributes: new { @class = "text-hide", @style = "background-color: #5cb85c;" })
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+
+            <div style="margin-top:20px;">
+                <a href="@Url.Action("Index", "Class")" class="btn btn-danger modal-btn-Dual pull-left">انصراف</a>
+                <button class="btn btn-success modal-btn-Dual pull-right" type="submit" name="btn-Delete">تایید</button>
+            </div>
+        }
+
+    </div>
+</div>
+
+@section Scripts {
+
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+
+    <script src="~/Scripts/Plugins/jQuery.Select2/select2.js"></script>
+    <script src="~/Scripts/Plugins/jQuery.Select2/i18n/fa.js"></script>
+
+    <script src="~/Scripts/MyScripts/Select2_Config.js"></script>
+
+    <script src="~/Scripts/Plugins/jQuery.MdBootstrapPersianDateTimePicker/jalaali.js"></script>
+    <script src="~/Scripts/Plugins/jQuery.MdBootstrapPersianDateTimePicker/jquery.Bootstrap-PersianDateTimePicker.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $("#Date td[data-name=today]").click();
+        });
+    </script>
+
+    <script>
+        $(function () {
+            $("input[type='hidden']:eq(2)").remove();
+        });
+    </script>
+
+}
